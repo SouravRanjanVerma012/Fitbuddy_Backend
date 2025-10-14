@@ -32,6 +32,7 @@ connectDB().then(() => {
 app.use(helmet());
 app.use(cors({
   origin: [
+    'https://fitforge-buddy.vercel.app',
     'http://localhost:8080', 
     'http://localhost:8081', 
     'http://localhost:8082', 
