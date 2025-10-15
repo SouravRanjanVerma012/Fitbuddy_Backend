@@ -11,13 +11,41 @@ const userSchema = new mongoose.Schema({
   },
   password: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.firebaseUid; // Password required only if not a Firebase user
+    },
     minlength: 6
   },
   name: {
     type: String,
-    required: true,
+    required: function() {
+      return !this.firebaseUid; // Name required only if not a Firebase user
+    },
     trim: true
+  },
+  firebaseUid: {
+    type: String,
+    unique: true,
+    sparse: true // Allows null values but enforces uniqueness for non-null
+  },
+  displayName: {
+    type: String,
+    trim: true
+  },
+  photoURL: {
+    type: String
+  },
+  provider: {
+    type: String,
+    enum: ['google', 'github', 'facebook', 'twitter', 'email']
+  },
+  lastLogin: {
+    type: Date,
+    default: Date.now
+  },
+  isActive: {
+    type: Boolean,
+    default: true
   },
   role: {
     type: String,
